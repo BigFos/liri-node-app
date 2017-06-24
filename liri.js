@@ -2,6 +2,7 @@ var keys = require("./keys.js");
 var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
 var request = require("request");
+var fs = require("fs");
 var pro = process.argv;
 
 var client = new Twitter(keys.twitterKeys);
@@ -12,7 +13,7 @@ if (pro[2] === "my-tweets") {
     client.get('statuses/user_timeline', params, function(error, tweets) {
         if (!error) {
             for (var i = 0; i < tweets.length; i++) {
-                console.log(tweets[i].created_at);
+                console.log("\n"+tweets[i].created_at);
                 console.log(tweets[i].text);
             }
         } else {
@@ -70,5 +71,21 @@ request("http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=40e9cece",
     console.log("Actors: " + JSON.parse(body).Actors);
     console.log("Website: " + JSON.parse(body).Website);
   }
+});
+}
+else if(pro[2] === "do-what-it-says"){
+fs.readFile("random.txt", "utf8", function(error, data) {
+  // If the code experiences any errors it will log the error to the console.
+  if (error) {
+    return console.log(error);
+  }
+  // We will then print the contents of data
+  // console.log(data);
+  // Then split it by commas (to make it more readable)
+  var dataArr = data.split(",");
+  // We will then re-display the content as an array for later use.
+  // console.log(dataArr);
+  pro[2] = dataArr[0];
+  pro[3] = dataArr[1];
 });
 }
