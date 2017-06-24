@@ -21,11 +21,14 @@ if (pro[2] === "my-tweets") {
 } else if (pro[2] === "spotify-this-song") {
 
     var track = "";
-
+    if(pro[3] == null){
+    	track = "The Sign"
+    }
+    else{
     for (var n = 3; n < pro.length; n++) {
         track = track + " " + pro[n];
     }
-
+	}
     var spotify = new Spotify(keys.spotifyKeys);
 
     spotify
